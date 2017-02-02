@@ -2,7 +2,7 @@
 /*
 Plugin Name: ACF Auto Export PHP
 Plugin URI: https://cementmarketing.com/
-Description: Automatically Export Field Groups to PHP on Save/Update for Advanced Custom Fields
+Description: Automagically Export Field Groups to PHP on Save/Update for Advanced Custom Fields
 Version: 1.0
 Author: Ben Wagner (Cement Marketing)
 Author URI: https://creativebeej.com/resume
