@@ -13,13 +13,6 @@ Domain Path: /lang
 
 if (!class_exists('acf')) {
 
-    $cmnt_acf_path = get_template_directory() . '/components/acf/acf.php';
-    if (!file_exists($cmnt_acf_path)) {
-        $cmnt_acf_path = get_template_directory() . '/components/acf';
-    } else {
-        $cmnt_acf_path = dirname(__FILE__);
-    }
-
     /*
      *  ACF Admin Field Group Class
      *
@@ -406,6 +399,54 @@ if (!class_exists('acf')) {
              */
 
             function save_post($post_id, $post) {
+
+                // $cmnt_acf_path = get_template_directory() . '/components/acf/acf.php';
+                if (function_exists('acf_get_setting')) {
+                    $acf_save_json_dir = acf_get_setting('save_json');
+                    if ( ! defined( 'ACF_CUSTOM_EXPORT_DIRECTORY' ) ) {
+                        define('ACF_CUSTOM_EXPORT_DIRECTORY', '/acf');
+                    }
+                    $acf_export_dir = get_template_directory() . ACF_CUSTOM_EXPORT_DIRECTORY;
+                    if (!file_exists($acf_export_dir)) {
+                        mkdir($acf_export_dir);
+                    }
+                    if (!file_exists($acf_export_dir . '/json')) {
+                        mkdir($acf_export_dir . '/json');
+                    }
+                    if (!file_exists($acf_export_dir . '/fields')) {
+                        mkdir($acf_export_dir . '/fields');
+                    }
+
+                    if (!is_string($acf_save_json_dir) || !is_dir($acf_save_json_dir)) {
+                        $acf_json_save_dir = dirname(__FILE__) . '/acf-json';
+                        //Change ACF Local JSON save location to /acf folder inside this plugin
+                        add_filter('acf/settings/save_json', function() {
+                            return dirname(__FILE__) . '/acf-json';
+                        });
+
+                        //Include the /acf folder in the places to look for ACF Local JSON files
+                        add_filter('acf/settings/load_json', function($paths) {
+                            $paths[] = dirname(__FILE__) . '/acf-json';
+                            return $paths;
+                        });
+                    }
+                } else {
+                    $acf_save_json_dir = dirname(__FILE__) . '/acf-json';
+                }
+
+                $field_group_filename = acf_auto_php_export_get_array_item(acf_auto_php_export_get_array_item($_POST, 'acf_field_group'), 'key');
+                $acf_json_filename = $acf_save_json_dir . '/' . $field_group_filename . '.json';
+
+                if ( is_file($acf_json_filename)) {
+                    copy($acf_json_filename, $acf_export_dir . '/json/' . $field_group_filename . '.json');
+                }
+
+                // if (file_exists($cmnt_acf_path)) {
+                //     $cmnt_acf_path = get_template_directory() . '/components/acf';
+                // } else {
+                //     $cmnt_acf_path = dirname(__FILE__);
+                // }
+
                 /* do not save if this is an auto save routine */
                 if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
                     return $post_id;
@@ -460,6 +501,7 @@ if (!class_exists('acf')) {
 
                     }
                 }
+
                 if (isset($_POST['ID'])) {
                     $field_groups = acf_extract_var($args, 'field_groups');
 
@@ -482,27 +524,6 @@ if (!class_exists('acf')) {
 
                     $field_group = acf_get_field_group($_POST['ID']);
 
-                    function acf_auto_php_export_improved_var_export($variable, $return = false, $tab_chars = '') {
-                        if ($variable instanceof stdClass) {
-                            $result = '(object) ' . acf_auto_php_export_improved_var_export(get_object_vars($variable), true);
-                        } else if (is_array($variable)) {
-                            $array = array();
-                            foreach ($variable as $key => $value) {
-                                $array[] = var_export($key, true) . ' => ' . acf_auto_php_export_improved_var_export($value, true);
-                            }
-                            $result = 'array (' . "" . $tab_chars . implode(', ' . "", $array) . "" . $tab_chars . ')';
-                        } else {
-                            $result = var_export($variable, true);
-                        }
-
-                        if (!$return) {
-                            print $result;
-                            return null;
-                        } else {
-                            return $result;
-                        }
-                    }
-
                     $field_group['fields'] = $field_group_fields;
 
                     /* code */
@@ -513,16 +534,17 @@ if (!class_exists('acf')) {
                     $code = str_replace("\\\'", '\'', $code);
 
                     $code = "<?php " . "\r\n" . "\r\n" . 'if (function_exists("acf_add_local_field_group")):' . "\r\n" . "\r\n" . "acf_add_local_field_group(" . $code . ");" . "\r\n" . "\r\n" . "endif;" . "\r\n";
-                    $file_path = get_home_path() . '/cement.log';
-                    $field_group_filename = get_array_item(get_array_item($_POST, 'acf_field_group'), 'key');
-                    /* $cmnt_acf_path = get_template_directory() . '/components/acf'; */
-                    copy($cmnt_acf_path . '/acf-json/' . $field_group_filename . '.json', $cmnt_acf_path . '/json/' . $field_group_filename . '.json');
 
-                    if (is_file($file_path)) {
+                    // $file_path = get_home_path() . '/cement.log';
+
+                    $file_path = $acf_export_dir . '/fields/' . $field_group_filename . '.php';
+
+                    if ( is_file($file_path)) {
                         $fd = fopen($file_path, "r+");
                     } else {
                         $fd = fopen($file_path, "wb");
                     }
+
                     fwrite($fd, $code);
                     fclose($fd);
 

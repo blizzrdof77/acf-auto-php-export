@@ -1,0 +1,120 @@
+{
+    "key": "group_573f69749d6b4",
+    "title": "Global Options",
+    "fields": [
+        {
+            "default_value": "",
+            "new_lines": "wpautop",
+            "maxlength": "",
+            "placeholder": "123 Imaginary Dr.",
+            "rows": 4,
+            "key": "field_57fe4aac93b72",
+            "label": "Address",
+            "name": "global_options_address",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "mini",
+                "id": ""
+            },
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_57fe4aed93b73",
+            "label": "Phone",
+            "name": "global_options_telephone",
+            "type": "tel",
+            "instructions": "Global phone number appearing in footer, etc..",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "XXX-XXX-XXXX",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "default_value": "",
+            "delay": 0,
+            "key": "field_57fe98a5b7061",
+            "label": "Copyright Text",
+            "name": "global_options_copyright",
+            "type": "wysiwyg",
+            "instructions": "Global copyright text appearing in footer, etc..",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "mini",
+                "id": ""
+            }
+        },
+        {
+            "default_value": 0,
+            "message": "",
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "key": "field_580690bb4dc5c",
+            "label": "Enable Network Partner Service Links",
+            "name": "enable_network_partner_service_links",
+            "type": "true_false",
+            "instructions": "If checked, network service categories will be wrapped in a link to their respective page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "key": "field_589269776d6ef",
+            "label": "",
+            "name": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "global-settings"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1486084567
+}
