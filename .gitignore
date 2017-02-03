@@ -1,0 +1,3 @@
+## MISCELLANEOUS LOG FILES
+*.log
+acf-json/*.json
