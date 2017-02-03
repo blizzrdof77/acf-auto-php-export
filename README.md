@@ -7,8 +7,8 @@ The purpose of this plugin is to avoid the tedious process of manually exporting
 
 The exports will be created in a folder called "acf/fields" in the active theme directory.  To change this, you can define the constant in your wp-config.php file - like this:
 
-/** Directory is relative to theme root */
-define('ACF_CUSTOM_EXPORT_DIRECTORY', '/custom-folder/acf');
+    /** Directory is relative to theme root */
+    define('ACF_CUSTOM_EXPORT_DIRECTORY', '/custom-folder/acf');
 
 I hope you enjoy!
 
