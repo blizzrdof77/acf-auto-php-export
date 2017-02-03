@@ -1,15 +1,17 @@
 <?php
 /*
 Plugin Name: ACF Auto Export PHP
-Plugin URI: https://cementmarketing.com/
+Plugin URI: https://github.com/blizzrdof77/acf-auto-php-export
 Description: Automagically Export Field Groups to PHP on Save/Update for Advanced Custom Fields
 Version: 1.0
 Author: Ben Wagner (Cement Marketing)
-Author URI: https://creativebeej.com/resume
+Author URI: https://cementmarketing.com/
 Copyright: Ben Wagner (Cement Marketing)
 Text Domain: acf
 Domain Path: /lang
  */
+
+
 
 if (!class_exists('acf')) {
 
@@ -104,25 +106,29 @@ if (!class_exists('acf')) {
 
             function current_screen() {
                 /* validate screen */
-                if (!acf_is_screen('acf-field-group')) {
+                if (function_exists('acf_is_screen') && !acf_is_screen('acf-field-group')) {
                     return;
                 }
 
                 /* disable filters to ensure ACF loads raw data from DB */
-                acf_disable_filters();
+                if (function_exists('acf_disable_filters')) {
+                    acf_disable_filters();
+                }
 
-                /* enqueue scripts */
-                acf_enqueue_scripts();
+                if (function_exists('acf_enqueue_scripts')) {
+                    /* enqueue scripts */
+                    acf_enqueue_scripts();
 
-                /* actions */
-                add_action('acf/input/admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
-                add_action('acf/input/admin_head', array($this, 'admin_head'));
-                add_action('acf/input/form_data', array($this, 'form_data'));
-                add_action('acf/input/admin_footer', array($this, 'admin_footer'));
-                add_action('acf/input/admin_footer_js', array($this, 'admin_footer_js'));
+                    /* actions */
+                    add_action('acf/input/admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
+                    add_action('acf/input/admin_head', array($this, 'admin_head'));
+                    add_action('acf/input/form_data', array($this, 'form_data'));
+                    add_action('acf/input/admin_footer', array($this, 'admin_footer'));
+                    add_action('acf/input/admin_footer_js', array($this, 'admin_footer_js'));
 
-                /* filters */
-                add_filter('acf/input/admin_l10n', array($this, 'admin_l10n'));
+                    /* filters */
+                    add_filter('acf/input/admin_l10n', array($this, 'admin_l10n'));
+                }
 
             }
 
@@ -450,7 +456,6 @@ if (!class_exists('acf')) {
                 /* do not save if this is an auto save routine */
                 if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
                     return $post_id;
-
                 }
 
                 /* bail early if not acf-field-group */
@@ -472,7 +477,9 @@ if (!class_exists('acf')) {
                 }
 
                 /* disable filters to ensure ACF loads raw data from DB */
-                acf_disable_filters();
+                if (function_exists('acf_disable_filters')) {
+                    acf_disable_filters();
+                }
 
                 /* save fields */
                 if (!empty($_POST['acf_fields'])) {
