@@ -509,6 +509,36 @@ if (!class_exists('acf')) {
                     }
                 }
 
+                /* delete fields */
+                if ($_POST['_acf_delete_fields']) {
+                    // $file_path = get_home_path() . '/cement.log';
+                    // acf_auto_php_export_log_to_file($_POST, $file_path);
+
+                    /* clean */
+                    $ids = explode('|', $_POST['_acf_delete_fields']);
+                    $ids = array_map('intval', $ids);
+
+                    /* loop */
+                    foreach ($ids as $id) {
+                        /* bai early if no id */
+                        if (!$id) {
+                            continue;
+                        }
+
+                        /* delete */
+                        acf_delete_field($id);
+
+                    }
+
+                }
+
+                /* add args */
+                $_POST['acf_field_group']['ID'] = $post_id;
+                $_POST['acf_field_group']['title'] = $_POST['post_title'];
+
+                /* save field group */
+                acf_update_field_group($_POST['acf_field_group']);
+
                 if (isset($_POST['ID'])) {
                     $field_groups = acf_extract_var($args, 'field_groups');
 
@@ -547,7 +577,9 @@ if (!class_exists('acf')) {
                     $file_path = $acf_export_dir . '/fields/' . $field_group_filename . '.php';
 
                     if ( is_file($file_path)) {
-                        $fd = fopen($file_path, "r+");
+                        unlink($file_path);
+                        $fd = fopen($file_path, "wb");
+                        // $fd = fopen($file_path, "r+");
                     } else {
                         $fd = fopen($file_path, "wb");
                     }
@@ -556,33 +588,6 @@ if (!class_exists('acf')) {
                     fclose($fd);
 
                 }
-
-                /* delete fields */
-                if ($_POST['_acf_delete_fields']) {
-                    /* clean */
-                    $ids = explode('|', $_POST['_acf_delete_fields']);
-                    $ids = array_map('intval', $ids);
-
-                    /* loop */
-                    foreach ($ids as $id) {
-                        /* bai early if no id */
-                        if (!$id) {
-                            continue;
-                        }
-
-                        /* delete */
-                        acf_delete_field($id);
-
-                    }
-
-                }
-
-                /* add args */
-                $_POST['acf_field_group']['ID'] = $post_id;
-                $_POST['acf_field_group']['title'] = $_POST['post_title'];
-
-                /* save field group */
-                acf_update_field_group($_POST['acf_field_group']);
 
                 /* return */
                 return $post_id;
