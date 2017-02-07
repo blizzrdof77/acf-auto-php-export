@@ -1,17 +1,16 @@
 <?php
-/*
-Plugin Name: ACF Auto Export PHP
-Plugin URI: https://github.com/blizzrdof77/acf-auto-php-export
-Description: Automagically Export Field Groups to PHP on Save/Update for Advanced Custom Fields
-Version: 1.0
-Author: Ben Wagner (Cement Marketing)
-Author URI: https://cementmarketing.com/
-Copyright: Ben Wagner (Cement Marketing)
-Text Domain: acf
-Domain Path: /lang
+/**
+ * Plugin Name:     ACF Auto Export PHP
+ * Plugin URI:      https://github.com/blizzrdof77/acf-auto-php-export
+ * Description:     Automagically Export Field Groups to PHP on Save/Update for Advanced Custom Fields
+ * Author:          Ben Wagner (Cement Marketing)
+ * Author URI:      https://cementmarketing.com/
+ * Text Domain:     acf-auto-php-export
+ * Domain Path:     /languages
+ * Version:         0.1.0
+ *
+ * @package         acf-auto-export-php
  */
-
-
 
 if (!class_exists('acf')) {
 

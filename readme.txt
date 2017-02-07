@@ -1,4 +1,4 @@
-# Acf Auto Php Export
+=== Acf Auto Php Export ===
 Contributors: (this should be a list of wordpress.org userid's)
 Donate link: http://prankhut.com/
 Tags: acf, advanced custom fields, auto-export, advanced custom fields pro
@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Automagically Export Field Groups to PHP on Save/Update for Advanced Custom Fields
 
-#### Description 
+== Description ==
 
 This plugin requires the Advanced Custom Fields Pro plugin to be present and activated
 
@@ -28,11 +28,11 @@ file - like this:
 
 Email me if you have any questions (blizzrdof77@gmail.com). Enjoy!
 
-#### Installation 
+== Installation ==
 1. Make sure Advanced Custom Fields Pro plugin is present and activated
 2  Upload the `acf-auto-php-export` foler to the `/wp-content/plugins/` directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Default export directory is "acf/fields" in the theme root - see plugin derscription on how to customize this
 
-#### Requirements 
+== Requirements ==
 * Advanced Custom Fields Pro (version 5) plugin
