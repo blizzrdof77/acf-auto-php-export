@@ -1,4 +1,4 @@
-# Acf Auto Php Export
+# ACF Auto PHP Export
 Contributors: blizzrdof77
 Donate link: https://payments.itssimpledigital.com/
 Tags: acf, advanced custom fields, add-on, advanced custom fields pro, php, json, import, export
